@@ -7,15 +7,23 @@ import (
 
 // StartedContext is an interface that represents a context that has been started.
 type StartedContext interface {
-	Finished()
+	Finished(status ProcessingStatus)
 }
 
 var nilStartedContext *NilStartedContext = nil
 
+type ProcessingStatus string
+
+const (
+	ProcessingStatusOK      ProcessingStatus = "ok"
+	ProcessingStatusFail    ProcessingStatus = "fail"
+	ProcessingStatusTimeout ProcessingStatus = "timeout"
+)
+
 type NilStartedContext struct {
 }
 
-func (*NilStartedContext) Finished() {
+func (*NilStartedContext) Finished(status ProcessingStatus) {
 	// do nothing
 }
 

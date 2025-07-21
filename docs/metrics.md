@@ -22,10 +22,10 @@ This section lists standard dimension types referenced by the standard
 
 Generally, services should provide the following metrics for input interfaces:
 
-| Metric Type | Metric Name | Description             | Dimensions                                             |
-|-------------|-------------|-------------------------|--------------------------------------------------------|
-| Counter     | if_count    | Request call count      | in_service, in_component, in_if_type, in_if_id, status |
-| Histogram   | if_duration | Request processing time | in_service, in_component, in_if_type, in_if_id, status |
+| Metric Type | Metric Name  | Description             | Dimensions                                             |
+|-------------|--------------|-------------------------|--------------------------------------------------------|
+| Counter     | iif_count    | Request call count      | in_service, in_component, in_if_type, in_if_id, status |
+| Histogram   | iif_duration | Request processing time | in_service, in_component, in_if_type, in_if_id, status |
 
 Types of input interfaces:
 
@@ -37,10 +37,10 @@ Types of input interfaces:
 
 ### Output Interfaces
 
-| Metric Type | Metric Name | Description             | Dimensions                                                                                                 |
-|-------------|-------------|-------------------------|------------------------------------------------------------------------------------------------------------|
-| Counter     | if_count    | Request call count      | in_service, in_component, in_if_type, in_if_id, out_service, out_component, out_if_type, out_if_id, status |
-| Histogram   | if_duration | Request processing time | in_service, in_component, in_if_type, in_if_id, out_service, out_component, out_if_type, out_if_id, status |
+| Metric Type | Metric Name  | Description             | Dimensions                                                                                                 |
+|-------------|--------------|-------------------------|------------------------------------------------------------------------------------------------------------|
+| Counter     | oif_count    | Request call count      | in_service, in_component, in_if_type, in_if_id, out_service, out_component, out_if_type, out_if_id, status |
+| Histogram   | oif_duration | Request processing time | in_service, in_component, in_if_type, in_if_id, out_service, out_component, out_if_type, out_if_id, status |
 
 
 Types of output interfaces:

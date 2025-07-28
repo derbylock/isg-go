@@ -50,7 +50,7 @@ func (k *ContextValueContextKeeper) ExtractInboundContext(ctx context.Context) *
 type InboundContext struct {
 	service       string
 	component     string
-	interfaceType string
+	interfaceType InterfaceType
 	interfaceID   string
 	startTime     time.Time
 }
@@ -63,7 +63,7 @@ func (i *InboundContext) Component() string {
 	return i.component
 }
 
-func (i *InboundContext) InterfaceType() string {
+func (i *InboundContext) InterfaceType() InterfaceType {
 	return i.interfaceType
 }
 
@@ -78,7 +78,7 @@ func (i *InboundContext) StartTime() time.Time {
 func NewInboundContext(
 	service string,
 	component string,
-	interfaceType string,
+	interfaceType InterfaceType,
 	interfaceID string,
 	startTime time.Time,
 ) *InboundContext {

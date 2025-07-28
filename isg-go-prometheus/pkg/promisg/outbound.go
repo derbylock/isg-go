@@ -12,7 +12,7 @@ func (p *PrometheusReporter) Outbound(
 	ctx context.Context,
 	service string,
 	component string,
-	interfaceType string,
+	interfaceType isg.InterfaceType,
 	interfaceID string,
 ) (context.Context, isg.StartedContext) {
 	now := p.now()
@@ -44,11 +44,11 @@ func (c *OutboundStartedContext) Finished(status isg.ProcessingStatus) {
 	c.reporter.outboundCounterVec.WithLabelValues(
 		inCtx.Service(),
 		inCtx.Component(),
-		inCtx.InterfaceType(),
+		inCtx.InterfaceType().String(),
 		inCtx.InterfaceID(),
 		outCtx.Service(),
 		outCtx.Component(),
-		outCtx.InterfaceType(),
+		outCtx.InterfaceType().String(),
 		outCtx.InterfaceID(),
 		s,
 	)
@@ -59,11 +59,11 @@ func (c *OutboundStartedContext) Finished(status isg.ProcessingStatus) {
 	c.reporter.outboundHistogramVec.WithLabelValues(
 		inCtx.Service(),
 		inCtx.Component(),
-		inCtx.InterfaceType(),
+		inCtx.InterfaceType().String(),
 		inCtx.InterfaceID(),
 		outCtx.Service(),
 		outCtx.Component(),
-		outCtx.InterfaceType(),
+		outCtx.InterfaceType().String(),
 		outCtx.InterfaceID(),
 		s,
 	).Observe(dt.Seconds())
@@ -71,11 +71,11 @@ func (c *OutboundStartedContext) Finished(status isg.ProcessingStatus) {
 	c.reporter.outboundHistogramVecMinutes.WithLabelValues(
 		inCtx.Service(),
 		inCtx.Component(),
-		inCtx.InterfaceType(),
+		inCtx.InterfaceType().String(),
 		inCtx.InterfaceID(),
 		outCtx.Service(),
 		outCtx.Component(),
-		outCtx.InterfaceType(),
+		outCtx.InterfaceType().String(),
 		outCtx.InterfaceID(),
 		s,
 	).Observe(dt.Minutes())

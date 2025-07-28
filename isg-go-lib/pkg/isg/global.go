@@ -19,11 +19,11 @@ func DefaultContextKeeper() ContextKeeper {
 	return defaultContextKeeper
 }
 
-func SetDefaultContextKeeper() ContextKeeper {
-	return defaultContextKeeper
+func SetDefaultContextKeeper(keeper ContextKeeper) {
+	defaultContextKeeper = keeper
 }
 
-func Inbound(ctx context.Context, service string, component string, interfaceType string, interfaceID string) (context.Context, StartedContext) {
+func Inbound(ctx context.Context, service string, component string, interfaceType InterfaceType, interfaceID string) (context.Context, StartedContext) {
 	if defaultReporter == nil {
 		return ctx, nilStartedContext
 	}
@@ -31,7 +31,7 @@ func Inbound(ctx context.Context, service string, component string, interfaceTyp
 	return defaultReporter.Inbound(ctx, service, component, interfaceType, interfaceID)
 }
 
-func Outbound(ctx context.Context, service string, component string, interfaceType string, interfaceID string) (context.Context, StartedContext) {
+func Outbound(ctx context.Context, service string, component string, interfaceType InterfaceType, interfaceID string) (context.Context, StartedContext) {
 	if defaultReporter == nil {
 		return ctx, nilStartedContext
 	}

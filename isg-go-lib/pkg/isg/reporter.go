@@ -31,9 +31,9 @@ func (*NilStartedContext) Finished(status ProcessingStatus) {
 type Reporter interface {
 	// Inbound reports an inbound interface processing started.
 	// It returns a StartedContext that should be used to report when the processing has finished.
-	Inbound(ctx context.Context, service string, component string, interfaceType string, interfaceID string) (context.Context, StartedContext)
+	Inbound(ctx context.Context, service string, component string, interfaceType InterfaceType, interfaceID string) (context.Context, StartedContext)
 
 	// Outbound reports an outbound interface processing.
 	// It returns a StartedContext that should be used to report when the processing has finished.
-	Outbound(ctx context.Context, service string, component string, interfaceType string, interfaceID string) (context.Context, StartedContext)
+	Outbound(ctx context.Context, service string, component string, interfaceType InterfaceType, interfaceID string) (context.Context, StartedContext)
 }

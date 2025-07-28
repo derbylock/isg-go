@@ -12,3 +12,7 @@ const (
 	DB    InterfaceType = "db"
 	OTHER InterfaceType = "other"
 )
+
+func (t InterfaceType) String() string {
+	return string(t)
+}

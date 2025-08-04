@@ -33,13 +33,6 @@ func NewInboundStartedContext(reporter *PrometheusReporter, startedCtx *isg.Inbo
 func (c *InboundStartedContext) Finished(status isg.ProcessingStatus) {
 	startedCtx := c.inCtx
 	s := string(status)
-	c.reporter.inboundCounterVec.WithLabelValues(
-		startedCtx.Service(),
-		startedCtx.Component(),
-		startedCtx.InterfaceType().String(),
-		startedCtx.InterfaceID(),
-		s,
-	)
 
 	now := c.reporter.now()
 	dt := now.Sub(startedCtx.StartTime())

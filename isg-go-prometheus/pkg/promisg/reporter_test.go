@@ -33,9 +33,6 @@ func TestPrometheusReporter_Inbound(t *testing.T) {
 	assert.NoError(t, testutil.GatherAndCompare(registry,
 		strings.NewReader(
 			`
-			# HELP iif_count Inbound interface processing count.
-			# TYPE iif_count counter
-			iif_count{in_component="component1",in_if_id="id1",in_if_type="type1",in_service="service1",status="ok"} 0
 			# HELP iif_duration Inbound interface processing duration histogram.
 			# TYPE iif_duration histogram
 			iif_duration_bucket{in_component="component1",in_if_id="id1",in_if_type="type1",in_service="service1",status="ok",le="0.005"} 0
@@ -115,9 +112,6 @@ func TestPrometheusReporter_Outbound(t *testing.T) {
 	assert.NoError(t, testutil.GatherAndCompare(registry,
 		strings.NewReader(
 			`
-			# HELP iif_count Inbound interface processing count.
-			# TYPE iif_count counter
-			iif_count{in_component="component1",in_if_id="id1",in_if_type="type1",in_service="service1",status="ok"} 0
 			# HELP iif_duration Inbound interface processing duration histogram.
 			# TYPE iif_duration histogram
 			iif_duration_bucket{in_component="component1",in_if_id="id1",in_if_type="type1",in_service="service1",status="ok",le="0.005"} 0
@@ -150,9 +144,6 @@ func TestPrometheusReporter_Outbound(t *testing.T) {
 			iif_duration_minutes_bucket{in_component="component1",in_if_id="id1",in_if_type="type1",in_service="service1",status="ok",le="+Inf"} 1
 			iif_duration_minutes_sum{in_component="component1",in_if_id="id1",in_if_type="type1",in_service="service1",status="ok"} 1.0166666666666666
 			iif_duration_minutes_count{in_component="component1",in_if_id="id1",in_if_type="type1",in_service="service1",status="ok"} 1
-			# HELP oif_count Outbound interface processing count.
-			# TYPE oif_count counter
-			oif_count{in_component="component1",in_if_id="id1",in_if_type="type1",in_service="service1",out_component="component2",out_if_id="id2",out_if_type="type2",out_service="service2",status="ok"} 0
 			# HELP oif_duration Outbound interface processing duration histogram.
 			# TYPE oif_duration histogram
 			oif_duration_bucket{in_component="component1",in_if_id="id1",in_if_type="type1",in_service="service1",out_component="component2",out_if_id="id2",out_if_type="type2",out_service="service2",status="ok",le="0.005"} 0

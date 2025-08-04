@@ -41,20 +41,9 @@ func (c *OutboundStartedContext) Finished(status isg.ProcessingStatus) {
 
 	outCtx := c.outCtx
 	s := string(status)
-	c.reporter.outboundCounterVec.WithLabelValues(
-		inCtx.Service(),
-		inCtx.Component(),
-		inCtx.InterfaceType().String(),
-		inCtx.InterfaceID(),
-		outCtx.Service(),
-		outCtx.Component(),
-		outCtx.InterfaceType().String(),
-		outCtx.InterfaceID(),
-		s,
-	)
 
 	now := c.reporter.now()
-	dt := now.Sub(inCtx.StartTime())
+	dt := now.Sub(outCtx.StartTime())
 
 	c.reporter.outboundHistogramVec.WithLabelValues(
 		inCtx.Service(),

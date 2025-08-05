@@ -17,6 +17,9 @@ func (p *PrometheusReporter) Outbound(
 ) (context.Context, isg.StartedContext) {
 	now := p.now()
 	inCtx := p.ctxKeeper.ExtractInboundContext(ctx)
+	if inCtx == nil {
+		inCtx = emptyInboundContext
+	}
 	outCtx := isg.NewInboundContext(service, component, interfaceType, interfaceID, now)
 	return ctx, NewOutboundStartedContext(p, inCtx, outCtx)
 }

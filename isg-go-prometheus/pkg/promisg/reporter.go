@@ -1,6 +1,7 @@
 package promisg
 
 import (
+	"errors"
 	"github.com/derbylock/isg-go/isg-go-lib/pkg/isg"
 	"github.com/prometheus/client_golang/prometheus"
 	"time"
@@ -67,8 +68,21 @@ func (p *PrometheusReporter) Init() {
 		[]string{"in_service", "in_component", "in_if_type", "in_if_id", "out_service", "out_component", "out_if_type", "out_if_id", "status"},
 	)
 
-	p.registerer.MustRegister(p.inboundHistogramVec)
-	p.registerer.MustRegister(p.inboundHistogramVecMinutes)
-	p.registerer.MustRegister(p.outboundHistogramVec)
-	p.registerer.MustRegister(p.outboundHistogramVecMinutes)
+	p.inboundHistogramVec = mustRegister(p.registerer, p.inboundHistogramVec)
+	p.inboundHistogramVecMinutes = mustRegister(p.registerer, p.inboundHistogramVecMinutes)
+	p.outboundHistogramVec = mustRegister(p.registerer, p.outboundHistogramVec)
+	p.outboundHistogramVecMinutes = mustRegister(p.registerer, p.outboundHistogramVecMinutes)
+}
+
+func mustRegister[T prometheus.Collector](registerer prometheus.Registerer, collector T) T {
+	if err := registerer.Register(collector); err != nil {
+		var alreadyRegistered prometheus.AlreadyRegisteredError
+		if errors.As(err, &alreadyRegistered) {
+			return alreadyRegistered.ExistingCollector.(T)
+		}
+
+		panic(err)
+	}
+
+	return collector
 }

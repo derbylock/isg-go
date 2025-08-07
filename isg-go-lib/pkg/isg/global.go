@@ -23,18 +23,45 @@ func SetDefaultContextKeeper(keeper ContextKeeper) {
 	defaultContextKeeper = keeper
 }
 
-func Inbound(ctx context.Context, service string, component string, interfaceType InterfaceType, interfaceID string) (context.Context, StartedContext) {
+func Inbound(ctx context.Context, service string, component string, interfaceType InterfaceType, interfaceID string) (context.Context, *StatelessStartedContext) {
 	if defaultReporter == nil {
-		return ctx, nilStartedContext
+		return ctx, NewStatelessStartedContext(nilStartedContext)
 	}
 
-	return defaultReporter.Inbound(ctx, service, component, interfaceType, interfaceID)
+	newCtx, startedCtx := defaultReporter.Inbound(ctx, service, component, interfaceType, interfaceID)
+	return newCtx, NewStatelessStartedContext(startedCtx)
 }
 
-func Outbound(ctx context.Context, service string, component string, interfaceType InterfaceType, interfaceID string) (context.Context, StartedContext) {
+func Outbound(ctx context.Context, service string, component string, interfaceType InterfaceType, interfaceID string) (context.Context, *StatelessStartedContext) {
 	if defaultReporter == nil {
-		return ctx, nilStartedContext
+		return ctx, NewStatelessStartedContext(nilStartedContext)
 	}
 
-	return defaultReporter.Outbound(ctx, service, component, interfaceType, interfaceID)
+	newCtx, startedCtx := defaultReporter.Outbound(ctx, service, component, interfaceType, interfaceID)
+	return newCtx, NewStatelessStartedContext(startedCtx)
+}
+
+type StatelessStartedContext struct {
+	parent StartedContext
+	status ProcessingStatus
+}
+
+func NewStatelessStartedContext(parent StartedContext) *StatelessStartedContext {
+	return &StatelessStartedContext{parent: parent, status: ProcessingStatusOK}
+}
+
+func (c *StatelessStartedContext) Finished(status ProcessingStatus) {
+	c.parent.Finished(status)
+}
+
+func (c *StatelessStartedContext) SetStatus(status ProcessingStatus) {
+	c.status = status
+}
+
+func (c *StatelessStartedContext) Finish() {
+	c.parent.Finished(c.status)
+}
+
+func (c *StatelessStartedContext) Fail() {
+	c.status = ProcessingStatusFail
 }

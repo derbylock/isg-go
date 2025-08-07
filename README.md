@@ -17,31 +17,48 @@ go get github.com/derbylock/isg-go/isg-go-prometheus
 First, initialize the PrometheusReporter:
 
 ```go
+package main
+
 import (
-    "github.com/derbylock/isg-go/isg-go-lib/pkg/isg"
-    "github.com/derbylock/isg-go/isg-go-prometheus/pkg/promisg"
+	"github.com/derbylock/isg-go/isg-go-lib/pkg/isg"
+	"github.com/derbylock/isg-go/isg-go-prometheus/pkg/promisg"
 )
 
 func main() {
-    ctxKeeper := isg.GetContextKeeper()
+	ctxKeeper := isg.GetContextKeeper()
 	registry := prometheus.NewRegistry()
-	
-    reporter := promisg.NewPrometheusReporter(ctxKeeper, time.Now, registry)
-    reporter.Init()
+
+	reporter := promisg.NewPrometheusReporter(ctxKeeper, time.Now, registry)
+	reporter.Init()
+
+	isg.SetDefaultContextKeeper(ctxKeeper)
+	isg.SetDefaultReporter(reporter)
 }
 ```
 
 Then, use the reporter to track inbound and outbound interface processing:
 
 ```go
-func process(reporter *promisg.PrometheusReporter, ctx context.Context, service string, component string, ifType string, ifId string) context.Context {
-    ctx, startedCtx := reporter.Inbound(ctx, service, component, ifType, ifId)
-    defer startedCtx.Finished(isg.Success)
-	
-    // process...
-    return ctx
-}
+package httpserverimpl
 
+import (
+    "context"
+    "github.com/derbylock/isg-go/isg-go-lib/pkg/isg"
+)
+
+func getProductByID(ctx context.Context, id string) error {
+    ctx, processingCtx := isg.Inbound(ctx, "products", "app", isg.HTTP, "getProductByID")
+    defer processingCtx.Finish()
+
+    // process...
+
+    if err != nil {
+        processingCtx.Fail()
+        return fmt.Errorf("something wrong: %w", err)
+    }
+
+    return nil
+}
 ```
 
 ## Contributing

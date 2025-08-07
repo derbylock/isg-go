@@ -20,19 +20,19 @@ First, initialize the PrometheusReporter:
 package main
 
 import (
-	"github.com/derbylock/isg-go/isg-go-lib/pkg/isg"
-	"github.com/derbylock/isg-go/isg-go-prometheus/pkg/promisg"
+    "github.com/derbylock/isg-go/isg-go-lib/pkg/isg"
+    "github.com/derbylock/isg-go/isg-go-prometheus/pkg/promisg"
 )
 
 func main() {
-	ctxKeeper := isg.GetContextKeeper()
-	registry := prometheus.NewRegistry()
+    ctxKeeper := isg.GetContextKeeper()
+    registry := prometheus.NewRegistry()
 
-	reporter := promisg.NewPrometheusReporter(ctxKeeper, time.Now, registry)
-	reporter.Init()
+    reporter := promisg.NewPrometheusReporter(ctxKeeper, time.Now, registry)
+    reporter.Init()
 
-	isg.SetDefaultContextKeeper(ctxKeeper)
-	isg.SetDefaultReporter(reporter)
+    isg.SetDefaultContextKeeper(ctxKeeper)
+    isg.SetDefaultReporter(reporter)
 }
 ```
 

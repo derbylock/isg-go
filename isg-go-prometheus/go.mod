@@ -3,7 +3,7 @@ module github.com/derbylock/isg-go/isg-go-prometheus
 go 1.21
 
 require (
-	github.com/derbylock/isg-go/isg-go-lib v1.1.2
+	github.com/derbylock/isg-go/isg-go-lib v1.2.0
 	github.com/prometheus/client_golang v1.14.0
 	github.com/stretchr/testify v1.10.0
 )

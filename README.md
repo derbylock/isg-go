@@ -10,7 +10,7 @@ This is a Prometheus reporter for the isg-go library. It provides functionality 
 Use go get to install the package:
 
 ```bash
-go get github.com/derbylock/isg-go/isg-go-prometheus
+go get github.com/derbylock/isg-go/isg-go-prometheus@latest
 ```
 
 ## Usage
